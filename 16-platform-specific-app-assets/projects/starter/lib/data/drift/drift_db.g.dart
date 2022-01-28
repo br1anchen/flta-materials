@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'moor_db.dart';
+part of 'drift_db.dart';
 
 // **************************************************************************
 // MoorGenerator
 // **************************************************************************
 
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
-class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
+class DriftRecipeData extends DataClass implements Insertable<DriftRecipeData> {
   final int id;
   final String label;
   final String image;
@@ -15,7 +15,7 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
   final double calories;
   final double totalWeight;
   final double totalTime;
-  MoorRecipeData(
+  DriftRecipeData(
       {required this.id,
       required this.label,
       required this.image,
@@ -23,11 +23,10 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
       required this.calories,
       required this.totalWeight,
       required this.totalTime});
-  factory MoorRecipeData.fromData(
-      Map<String, dynamic> data, GeneratedDatabase db,
+  factory DriftRecipeData.fromData(Map<String, dynamic> data,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
-    return MoorRecipeData(
+    return DriftRecipeData(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       label: const StringType()
@@ -57,8 +56,8 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
     return map;
   }
 
-  MoorRecipeCompanion toCompanion(bool nullToAbsent) {
-    return MoorRecipeCompanion(
+  DriftRecipeCompanion toCompanion(bool nullToAbsent) {
+    return DriftRecipeCompanion(
       id: Value(id),
       label: Value(label),
       image: Value(image),
@@ -69,10 +68,10 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
     );
   }
 
-  factory MoorRecipeData.fromJson(Map<String, dynamic> json,
+  factory DriftRecipeData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
-    return MoorRecipeData(
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DriftRecipeData(
       id: serializer.fromJson<int>(json['id']),
       label: serializer.fromJson<String>(json['label']),
       image: serializer.fromJson<String>(json['image']),
@@ -84,7 +83,7 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'label': serializer.toJson<String>(label),
@@ -96,7 +95,7 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
     };
   }
 
-  MoorRecipeData copyWith(
+  DriftRecipeData copyWith(
           {int? id,
           String? label,
           String? image,
@@ -104,7 +103,7 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
           double? calories,
           double? totalWeight,
           double? totalTime}) =>
-      MoorRecipeData(
+      DriftRecipeData(
         id: id ?? this.id,
         label: label ?? this.label,
         image: image ?? this.image,
@@ -115,7 +114,7 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
       );
   @override
   String toString() {
-    return (StringBuffer('MoorRecipeData(')
+    return (StringBuffer('DriftRecipeData(')
           ..write('id: $id, ')
           ..write('label: $label, ')
           ..write('image: $image, ')
@@ -128,20 +127,12 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(
-      id.hashCode,
-      $mrjc(
-          label.hashCode,
-          $mrjc(
-              image.hashCode,
-              $mrjc(
-                  url.hashCode,
-                  $mrjc(calories.hashCode,
-                      $mrjc(totalWeight.hashCode, totalTime.hashCode)))))));
+  int get hashCode =>
+      Object.hash(id, label, image, url, calories, totalWeight, totalTime);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is MoorRecipeData &&
+      (other is DriftRecipeData &&
           other.id == this.id &&
           other.label == this.label &&
           other.image == this.image &&
@@ -151,7 +142,7 @@ class MoorRecipeData extends DataClass implements Insertable<MoorRecipeData> {
           other.totalTime == this.totalTime);
 }
 
-class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
+class DriftRecipeCompanion extends UpdateCompanion<DriftRecipeData> {
   final Value<int> id;
   final Value<String> label;
   final Value<String> image;
@@ -159,7 +150,7 @@ class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
   final Value<double> calories;
   final Value<double> totalWeight;
   final Value<double> totalTime;
-  const MoorRecipeCompanion({
+  const DriftRecipeCompanion({
     this.id = const Value.absent(),
     this.label = const Value.absent(),
     this.image = const Value.absent(),
@@ -168,7 +159,7 @@ class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
     this.totalWeight = const Value.absent(),
     this.totalTime = const Value.absent(),
   });
-  MoorRecipeCompanion.insert({
+  DriftRecipeCompanion.insert({
     this.id = const Value.absent(),
     required String label,
     required String image,
@@ -182,7 +173,7 @@ class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
         calories = Value(calories),
         totalWeight = Value(totalWeight),
         totalTime = Value(totalTime);
-  static Insertable<MoorRecipeData> custom({
+  static Insertable<DriftRecipeData> custom({
     Expression<int>? id,
     Expression<String>? label,
     Expression<String>? image,
@@ -202,7 +193,7 @@ class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
     });
   }
 
-  MoorRecipeCompanion copyWith(
+  DriftRecipeCompanion copyWith(
       {Value<int>? id,
       Value<String>? label,
       Value<String>? image,
@@ -210,7 +201,7 @@ class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
       Value<double>? calories,
       Value<double>? totalWeight,
       Value<double>? totalTime}) {
-    return MoorRecipeCompanion(
+    return DriftRecipeCompanion(
       id: id ?? this.id,
       label: label ?? this.label,
       image: image ?? this.image,
@@ -250,7 +241,7 @@ class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
 
   @override
   String toString() {
-    return (StringBuffer('MoorRecipeCompanion(')
+    return (StringBuffer('DriftRecipeCompanion(')
           ..write('id: $id, ')
           ..write('label: $label, ')
           ..write('image: $image, ')
@@ -263,51 +254,58 @@ class MoorRecipeCompanion extends UpdateCompanion<MoorRecipeData> {
   }
 }
 
-class $MoorRecipeTable extends MoorRecipe
-    with TableInfo<$MoorRecipeTable, MoorRecipeData> {
+class $DriftRecipeTable extends DriftRecipe
+    with TableInfo<$DriftRecipeTable, DriftRecipeData> {
   final GeneratedDatabase _db;
   final String? _alias;
-  $MoorRecipeTable(this._db, [this._alias]);
+  $DriftRecipeTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
       'id', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _labelMeta = const VerificationMeta('label');
+  @override
   late final GeneratedColumn<String?> label = GeneratedColumn<String?>(
       'label', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _imageMeta = const VerificationMeta('image');
+  @override
   late final GeneratedColumn<String?> image = GeneratedColumn<String?>(
       'image', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _urlMeta = const VerificationMeta('url');
+  @override
   late final GeneratedColumn<String?> url = GeneratedColumn<String?>(
       'url', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _caloriesMeta = const VerificationMeta('calories');
+  @override
   late final GeneratedColumn<double?> calories = GeneratedColumn<double?>(
       'calories', aliasedName, false,
-      typeName: 'REAL', requiredDuringInsert: true);
+      type: const RealType(), requiredDuringInsert: true);
   final VerificationMeta _totalWeightMeta =
       const VerificationMeta('totalWeight');
+  @override
   late final GeneratedColumn<double?> totalWeight = GeneratedColumn<double?>(
       'total_weight', aliasedName, false,
-      typeName: 'REAL', requiredDuringInsert: true);
+      type: const RealType(), requiredDuringInsert: true);
   final VerificationMeta _totalTimeMeta = const VerificationMeta('totalTime');
+  @override
   late final GeneratedColumn<double?> totalTime = GeneratedColumn<double?>(
       'total_time', aliasedName, false,
-      typeName: 'REAL', requiredDuringInsert: true);
+      type: const RealType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
       [id, label, image, url, calories, totalWeight, totalTime];
   @override
-  String get aliasedName => _alias ?? 'moor_recipe';
+  String get aliasedName => _alias ?? 'drift_recipe';
   @override
-  String get actualTableName => 'moor_recipe';
+  String get actualTableName => 'drift_recipe';
   @override
-  VerificationContext validateIntegrity(Insertable<MoorRecipeData> instance,
+  VerificationContext validateIntegrity(Insertable<DriftRecipeData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -358,33 +356,32 @@ class $MoorRecipeTable extends MoorRecipe
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  MoorRecipeData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return MoorRecipeData.fromData(data, _db,
+  DriftRecipeData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return DriftRecipeData.fromData(data,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
-  $MoorRecipeTable createAlias(String alias) {
-    return $MoorRecipeTable(_db, alias);
+  $DriftRecipeTable createAlias(String alias) {
+    return $DriftRecipeTable(_db, alias);
   }
 }
 
-class MoorIngredientData extends DataClass
-    implements Insertable<MoorIngredientData> {
+class DriftIngredientData extends DataClass
+    implements Insertable<DriftIngredientData> {
   final int id;
   final int recipeId;
   final String name;
   final double weight;
-  MoorIngredientData(
+  DriftIngredientData(
       {required this.id,
       required this.recipeId,
       required this.name,
       required this.weight});
-  factory MoorIngredientData.fromData(
-      Map<String, dynamic> data, GeneratedDatabase db,
+  factory DriftIngredientData.fromData(Map<String, dynamic> data,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
-    return MoorIngredientData(
+    return DriftIngredientData(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       recipeId: const IntType()
@@ -405,8 +402,8 @@ class MoorIngredientData extends DataClass
     return map;
   }
 
-  MoorIngredientCompanion toCompanion(bool nullToAbsent) {
-    return MoorIngredientCompanion(
+  DriftIngredientCompanion toCompanion(bool nullToAbsent) {
+    return DriftIngredientCompanion(
       id: Value(id),
       recipeId: Value(recipeId),
       name: Value(name),
@@ -414,10 +411,10 @@ class MoorIngredientData extends DataClass
     );
   }
 
-  factory MoorIngredientData.fromJson(Map<String, dynamic> json,
+  factory DriftIngredientData.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
-    return MoorIngredientData(
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DriftIngredientData(
       id: serializer.fromJson<int>(json['id']),
       recipeId: serializer.fromJson<int>(json['recipeId']),
       name: serializer.fromJson<String>(json['name']),
@@ -426,7 +423,7 @@ class MoorIngredientData extends DataClass
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'recipeId': serializer.toJson<int>(recipeId),
@@ -435,9 +432,9 @@ class MoorIngredientData extends DataClass
     };
   }
 
-  MoorIngredientData copyWith(
+  DriftIngredientData copyWith(
           {int? id, int? recipeId, String? name, double? weight}) =>
-      MoorIngredientData(
+      DriftIngredientData(
         id: id ?? this.id,
         recipeId: recipeId ?? this.recipeId,
         name: name ?? this.name,
@@ -445,7 +442,7 @@ class MoorIngredientData extends DataClass
       );
   @override
   String toString() {
-    return (StringBuffer('MoorIngredientData(')
+    return (StringBuffer('DriftIngredientData(')
           ..write('id: $id, ')
           ..write('recipeId: $recipeId, ')
           ..write('name: $name, ')
@@ -455,30 +452,29 @@ class MoorIngredientData extends DataClass
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(id.hashCode,
-      $mrjc(recipeId.hashCode, $mrjc(name.hashCode, weight.hashCode))));
+  int get hashCode => Object.hash(id, recipeId, name, weight);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is MoorIngredientData &&
+      (other is DriftIngredientData &&
           other.id == this.id &&
           other.recipeId == this.recipeId &&
           other.name == this.name &&
           other.weight == this.weight);
 }
 
-class MoorIngredientCompanion extends UpdateCompanion<MoorIngredientData> {
+class DriftIngredientCompanion extends UpdateCompanion<DriftIngredientData> {
   final Value<int> id;
   final Value<int> recipeId;
   final Value<String> name;
   final Value<double> weight;
-  const MoorIngredientCompanion({
+  const DriftIngredientCompanion({
     this.id = const Value.absent(),
     this.recipeId = const Value.absent(),
     this.name = const Value.absent(),
     this.weight = const Value.absent(),
   });
-  MoorIngredientCompanion.insert({
+  DriftIngredientCompanion.insert({
     this.id = const Value.absent(),
     required int recipeId,
     required String name,
@@ -486,7 +482,7 @@ class MoorIngredientCompanion extends UpdateCompanion<MoorIngredientData> {
   })  : recipeId = Value(recipeId),
         name = Value(name),
         weight = Value(weight);
-  static Insertable<MoorIngredientData> custom({
+  static Insertable<DriftIngredientData> custom({
     Expression<int>? id,
     Expression<int>? recipeId,
     Expression<String>? name,
@@ -500,12 +496,12 @@ class MoorIngredientCompanion extends UpdateCompanion<MoorIngredientData> {
     });
   }
 
-  MoorIngredientCompanion copyWith(
+  DriftIngredientCompanion copyWith(
       {Value<int>? id,
       Value<int>? recipeId,
       Value<String>? name,
       Value<double>? weight}) {
-    return MoorIngredientCompanion(
+    return DriftIngredientCompanion(
       id: id ?? this.id,
       recipeId: recipeId ?? this.recipeId,
       name: name ?? this.name,
@@ -533,7 +529,7 @@ class MoorIngredientCompanion extends UpdateCompanion<MoorIngredientData> {
 
   @override
   String toString() {
-    return (StringBuffer('MoorIngredientCompanion(')
+    return (StringBuffer('DriftIngredientCompanion(')
           ..write('id: $id, ')
           ..write('recipeId: $recipeId, ')
           ..write('name: $name, ')
@@ -543,37 +539,42 @@ class MoorIngredientCompanion extends UpdateCompanion<MoorIngredientData> {
   }
 }
 
-class $MoorIngredientTable extends MoorIngredient
-    with TableInfo<$MoorIngredientTable, MoorIngredientData> {
+class $DriftIngredientTable extends DriftIngredient
+    with TableInfo<$DriftIngredientTable, DriftIngredientData> {
   final GeneratedDatabase _db;
   final String? _alias;
-  $MoorIngredientTable(this._db, [this._alias]);
+  $DriftIngredientTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
       'id', aliasedName, false,
-      typeName: 'INTEGER',
+      type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _recipeIdMeta = const VerificationMeta('recipeId');
+  @override
   late final GeneratedColumn<int?> recipeId = GeneratedColumn<int?>(
       'recipe_id', aliasedName, false,
-      typeName: 'INTEGER', requiredDuringInsert: true);
+      type: const IntType(), requiredDuringInsert: true);
   final VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
   late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
       'name', aliasedName, false,
-      typeName: 'TEXT', requiredDuringInsert: true);
+      type: const StringType(), requiredDuringInsert: true);
   final VerificationMeta _weightMeta = const VerificationMeta('weight');
+  @override
   late final GeneratedColumn<double?> weight = GeneratedColumn<double?>(
       'weight', aliasedName, false,
-      typeName: 'REAL', requiredDuringInsert: true);
+      type: const RealType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [id, recipeId, name, weight];
   @override
-  String get aliasedName => _alias ?? 'moor_ingredient';
+  String get aliasedName => _alias ?? 'drift_ingredient';
   @override
-  String get actualTableName => 'moor_ingredient';
+  String get actualTableName => 'drift_ingredient';
   @override
-  VerificationContext validateIntegrity(Insertable<MoorIngredientData> instance,
+  VerificationContext validateIntegrity(
+      Insertable<DriftIngredientData> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -604,21 +605,22 @@ class $MoorIngredientTable extends MoorIngredient
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  MoorIngredientData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return MoorIngredientData.fromData(data, _db,
+  DriftIngredientData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return DriftIngredientData.fromData(data,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
-  $MoorIngredientTable createAlias(String alias) {
-    return $MoorIngredientTable(_db, alias);
+  $DriftIngredientTable createAlias(String alias) {
+    return $DriftIngredientTable(_db, alias);
   }
 }
 
 abstract class _$RecipeDatabase extends GeneratedDatabase {
   _$RecipeDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
-  late final $MoorRecipeTable moorRecipe = $MoorRecipeTable(this);
-  late final $MoorIngredientTable moorIngredient = $MoorIngredientTable(this);
+  late final $DriftRecipeTable driftRecipe = $DriftRecipeTable(this);
+  late final $DriftIngredientTable driftIngredient =
+      $DriftIngredientTable(this);
   late final RecipeDao recipeDao = RecipeDao(this as RecipeDatabase);
   late final IngredientDao ingredientDao =
       IngredientDao(this as RecipeDatabase);
@@ -626,7 +628,7 @@ abstract class _$RecipeDatabase extends GeneratedDatabase {
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [moorRecipe, moorIngredient];
+      [driftRecipe, driftIngredient];
 }
 
 // **************************************************************************
@@ -634,8 +636,8 @@ abstract class _$RecipeDatabase extends GeneratedDatabase {
 // **************************************************************************
 
 mixin _$RecipeDaoMixin on DatabaseAccessor<RecipeDatabase> {
-  $MoorRecipeTable get moorRecipe => attachedDatabase.moorRecipe;
+  $DriftRecipeTable get driftRecipe => attachedDatabase.driftRecipe;
 }
 mixin _$IngredientDaoMixin on DatabaseAccessor<RecipeDatabase> {
-  $MoorIngredientTable get moorIngredient => attachedDatabase.moorIngredient;
+  $DriftIngredientTable get driftIngredient => attachedDatabase.driftIngredient;
 }

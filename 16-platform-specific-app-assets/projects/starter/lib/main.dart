@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-import 'data/moor/moor_repository.dart';
+import 'data/drift/drift_repository.dart';
 import 'data/repository.dart';
 import 'network/recipe_service.dart';
 import 'network/service_interface.dart';
@@ -13,7 +12,7 @@ Future<void> main() async {
   _setupLogging();
   WidgetsFlutterBinding.ensureInitialized();
   // final repository = SqliteRepository();
-  final repository = MoorRepository();
+  final repository = DriftRepository();
   await repository.init();
   runApp(MyApp(repository: repository));
 }

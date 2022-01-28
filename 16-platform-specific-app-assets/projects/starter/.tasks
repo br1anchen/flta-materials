@@ -1,0 +1,17 @@
+# vim: set fenc=utf-8 ft=dosini:
+# see: https://github.com/skywind3000/asynctasks.vim/wiki/Task-Config
+
+[build-runner]
+command=flutter pub run build_runner build --delete-conflicting-outputs
+cwd=<root>
+output=quickfix
+errorformat=%f:%l:%m
+save=1
+
+
+[run-web]
+command=flutter run -d chrome --web-renderer html
+cwd=<root>
+output=quickfix
+errorformat=%f:%l:%m
+save=1

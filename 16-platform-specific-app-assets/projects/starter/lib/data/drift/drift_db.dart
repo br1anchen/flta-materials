@@ -1,9 +1,11 @@
-import 'package:moor_flutter/moor_flutter.dart';
+import 'package:drift/drift.dart';
 import '../models/models.dart';
 
-part 'moor_db.g.dart';
+export 'database/shared.dart';
 
-class MoorRecipe extends Table {
+part 'drift_db.g.dart';
+
+class DriftRecipe extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   TextColumn get label => text()();
@@ -19,7 +21,7 @@ class MoorRecipe extends Table {
   RealColumn get totalTime => real()();
 }
 
-class MoorIngredient extends Table {
+class DriftIngredient extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   IntColumn get recipeId => integer()();
@@ -29,31 +31,30 @@ class MoorIngredient extends Table {
   RealColumn get weight => real()();
 }
 
-@UseMoor(tables: [MoorRecipe, MoorIngredient], daos: [RecipeDao, IngredientDao])
+@DriftDatabase(
+    tables: [DriftRecipe, DriftIngredient], daos: [RecipeDao, IngredientDao])
 class RecipeDatabase extends _$RecipeDatabase {
-  RecipeDatabase()
-      : super(FlutterQueryExecutor.inDatabaseFolder(
-            path: 'recipes.sqlite', logStatements: true));
+  RecipeDatabase(QueryExecutor e) : super(e);
 
   @override
   int get schemaVersion => 1;
 }
 
-@UseDao(tables: [MoorRecipe])
+@DriftAccessor(tables: [DriftRecipe])
 class RecipeDao extends DatabaseAccessor<RecipeDatabase> with _$RecipeDaoMixin {
   final RecipeDatabase db;
 
   RecipeDao(this.db) : super(db);
 
-  Future<List<MoorRecipeData>> findAllRecipes() => select(moorRecipe).get();
+  Future<List<DriftRecipeData>> findAllRecipes() => select(driftRecipe).get();
 
   Stream<List<Recipe>> watchAllRecipes() {
-    return select(moorRecipe).watch().map(
+    return select(driftRecipe).watch().map(
       (rows) {
         final recipes = <Recipe>[];
         rows.forEach(
           (row) {
-            final recipe = moorRecipeToRecipe(row);
+            final recipe = driftRecipeToRecipe(row);
             if (!recipes.contains(recipe)) {
               recipe.ingredients = <Ingredient>[];
               recipes.add(recipe);
@@ -65,41 +66,41 @@ class RecipeDao extends DatabaseAccessor<RecipeDatabase> with _$RecipeDaoMixin {
     );
   }
 
-  Future<List<MoorRecipeData>> findRecipeById(int id) =>
-      (select(moorRecipe)..where((tbl) => tbl.id.equals(id))).get();
+  Future<List<DriftRecipeData>> findRecipeById(int id) =>
+      (select(driftRecipe)..where((tbl) => tbl.id.equals(id))).get();
 
-  Future<int> insertRecipe(Insertable<MoorRecipeData> recipe) =>
-      into(moorRecipe).insert(recipe);
+  Future<int> insertRecipe(Insertable<DriftRecipeData> recipe) =>
+      into(driftRecipe).insert(recipe);
 
   Future deleteRecipe(int id) => Future.value(
-      (delete(moorRecipe)..where((tbl) => tbl.id.equals(id))).go());
+      (delete(driftRecipe)..where((tbl) => tbl.id.equals(id))).go());
 }
 
-@UseDao(tables: [MoorIngredient])
+@DriftAccessor(tables: [DriftIngredient])
 class IngredientDao extends DatabaseAccessor<RecipeDatabase>
     with _$IngredientDaoMixin {
   final RecipeDatabase db;
 
   IngredientDao(this.db) : super(db);
 
-  Future<List<MoorIngredientData>> findAllIngredients() =>
-      select(moorIngredient).get();
+  Future<List<DriftIngredientData>> findAllIngredients() =>
+      select(driftIngredient).get();
 
-  Stream<List<MoorIngredientData>> watchAllIngredients() =>
-      select(moorIngredient).watch();
+  Stream<List<DriftIngredientData>> watchAllIngredients() =>
+      select(driftIngredient).watch();
 
-  Future<List<MoorIngredientData>> findRecipeIngredients(int id) =>
-      (select(moorIngredient)..where((tbl) => tbl.recipeId.equals(id))).get();
+  Future<List<DriftIngredientData>> findRecipeIngredients(int id) =>
+      (select(driftIngredient)..where((tbl) => tbl.recipeId.equals(id))).get();
 
-  Future<int> insertIngredient(Insertable<MoorIngredientData> ingredient) =>
-      into(moorIngredient).insert(ingredient);
+  Future<int> insertIngredient(Insertable<DriftIngredientData> ingredient) =>
+      into(driftIngredient).insert(ingredient);
 
   Future deleteIngredient(int id) => Future.value(
-      (delete(moorIngredient)..where((tbl) => tbl.id.equals(id))).go());
+      (delete(driftIngredient)..where((tbl) => tbl.id.equals(id))).go());
 }
 
 // Conversion Methods
-Recipe moorRecipeToRecipe(MoorRecipeData recipe) {
+Recipe driftRecipeToRecipe(DriftRecipeData recipe) {
   return Recipe(
       id: recipe.id,
       label: recipe.label,
@@ -110,8 +111,8 @@ Recipe moorRecipeToRecipe(MoorRecipeData recipe) {
       totalTime: recipe.totalTime);
 }
 
-Insertable<MoorRecipeData> recipeToInsertableMoorRecipe(Recipe recipe) {
-  return MoorRecipeCompanion.insert(
+Insertable<DriftRecipeData> recipeToInsertableDriftRecipe(Recipe recipe) {
+  return DriftRecipeCompanion.insert(
       label: recipe.label ?? '',
       image: recipe.image ?? '',
       url: recipe.url ?? '',
@@ -120,7 +121,7 @@ Insertable<MoorRecipeData> recipeToInsertableMoorRecipe(Recipe recipe) {
       totalTime: recipe.totalTime ?? 0);
 }
 
-Ingredient moorIngredientToIngredient(MoorIngredientData ingredient) {
+Ingredient driftIngredientToIngredient(DriftIngredientData ingredient) {
   return Ingredient(
       id: ingredient.id,
       recipeId: ingredient.recipeId,
@@ -128,9 +129,9 @@ Ingredient moorIngredientToIngredient(MoorIngredientData ingredient) {
       weight: ingredient.weight);
 }
 
-MoorIngredientCompanion ingredientToInsertableMoorIngredient(
+DriftIngredientCompanion ingredientToInsertableDriftIngredient(
     Ingredient ingredient) {
-  return MoorIngredientCompanion.insert(
+  return DriftIngredientCompanion.insert(
       recipeId: ingredient.recipeId ?? 0,
       name: ingredient.name ?? '',
       weight: ingredient.weight ?? 0);
