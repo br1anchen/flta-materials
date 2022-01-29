@@ -8,7 +8,7 @@ part of 'hive_ingredient.dart';
 
 class HiveIngredientAdapter extends TypeAdapter<HiveIngredient> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
   HiveIngredient read(BinaryReader reader) {

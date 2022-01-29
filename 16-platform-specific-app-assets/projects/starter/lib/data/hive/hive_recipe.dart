@@ -22,15 +22,12 @@ class HiveRecipe extends HiveObject {
   @HiveField(5)
   double? totalTime;
 
-  @HiveField(6)
-  HiveList? ingredients;
-
-  HiveRecipe(
-      {this.label,
-      this.image,
-      this.url,
-      this.calories,
-      this.totalWeight,
-      this.totalTime,
-      this.ingredients});
+  HiveRecipe({
+    this.label,
+    this.image,
+    this.url,
+    this.calories,
+    this.totalWeight,
+    this.totalTime,
+  });
 }

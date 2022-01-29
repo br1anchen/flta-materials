@@ -23,14 +23,13 @@ class HiveRecipeAdapter extends TypeAdapter<HiveRecipe> {
       calories: fields[3] as double?,
       totalWeight: fields[4] as double?,
       totalTime: fields[5] as double?,
-      ingredients: (fields[6] as HiveList?)?.castHiveList(),
     );
   }
 
   @override
   void write(BinaryWriter writer, HiveRecipe obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.label)
       ..writeByte(1)
@@ -42,9 +41,7 @@ class HiveRecipeAdapter extends TypeAdapter<HiveRecipe> {
       ..writeByte(4)
       ..write(obj.totalWeight)
       ..writeByte(5)
-      ..write(obj.totalTime)
-      ..writeByte(6)
-      ..write(obj.ingredients);
+      ..write(obj.totalTime);
   }
 
   @override
