@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:hive/hive.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:webcrypto/webcrypto.dart';
 
 import '../models/models.dart';
 import './hive_recipe.dart';
 import './hive_ingredient.dart';
+import './hive_key_pair.dart';
 
 Recipe hiveRecipeToRecipe(int id, HiveRecipe hiveRecipe) {
   return Recipe(
@@ -43,9 +44,16 @@ HiveIngredient ingredientToInsertableHiveIngredient(Ingredient ingredient) {
 
 class RecipeDatabase {
   late Uint8List _encryptionKey;
+  final String _recipesBoxId = 'recipes';
+  final String _ingredientsBoxId = 'ingredients';
+  final String _rsaKeysBoxId = 'rsa_keys';
 
   Future<void> init() async {
     await Hive.initFlutter();
+
+    Hive.registerAdapter(HiveRecipeAdapter());
+    Hive.registerAdapter(HiveIngredientAdapter());
+    Hive.registerAdapter(HiveKeyPairAdapter());
 
     const secureStorage = FlutterSecureStorage();
     final containsEncryptionKey = await secureStorage.containsKey(key: 'key');
@@ -56,19 +64,23 @@ class RecipeDatabase {
 
     _encryptionKey =
         base64Url.decode(await secureStorage.read(key: 'key') as String);
-    print('Encryption key: $_encryptionKey');
 
-    Hive.registerAdapter(HiveRecipeAdapter());
-    Hive.registerAdapter(HiveIngredientAdapter());
+    final rsaKeysbox = await openRSAKeysBox();
+    rsaKeysbox.put('rsa', await HiveKeyPair.generateKeys());
   }
 
   Future<Box<HiveRecipe>> openReipesBox() {
-    return Hive.openBox<HiveRecipe>('recipes',
+    return Hive.openBox<HiveRecipe>(_recipesBoxId,
         encryptionCipher: HiveAesCipher(_encryptionKey));
   }
 
   Future<Box<HiveIngredient>> openIngredientsBox() {
-    return Hive.openBox<HiveIngredient>('ingredients',
+    return Hive.openBox<HiveIngredient>(_ingredientsBoxId,
+        encryptionCipher: HiveAesCipher(_encryptionKey));
+  }
+
+  Future<Box<HiveKeyPair>> openRSAKeysBox() {
+    return Hive.openBox(_rsaKeysBoxId,
         encryptionCipher: HiveAesCipher(_encryptionKey));
   }
 }
