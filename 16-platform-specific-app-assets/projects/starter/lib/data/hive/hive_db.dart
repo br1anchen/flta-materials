@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'dart:async';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:webcrypto/webcrypto.dart';
 
 import '../models/models.dart';
 import './hive_recipe.dart';
@@ -100,6 +100,8 @@ class RecipeDatabase {
 
 class RecipeDao {
   final Box<HiveRecipe> box;
+  final StreamController<List<Recipe>> controller =
+      StreamController<List<Recipe>>();
 
   RecipeDao(this.box);
 
@@ -120,11 +122,14 @@ class RecipeDao {
       Future.value(RecipeDao.mapAllHiveRecipesToRecipes(box));
 
   Stream<List<Recipe>> watchAllRecipes() {
-    return box.watch().map(
+    controller.add(RecipeDao.mapAllHiveRecipesToRecipes(box));
+    box.watch().listen(
       (event) {
-        return RecipeDao.mapAllHiveRecipesToRecipes(box);
+        controller.add(RecipeDao.mapAllHiveRecipesToRecipes(box));
       },
     );
+
+    return controller.stream;
   }
 
   Future<List<Recipe>> findRecipeById(int id) {
@@ -139,6 +144,7 @@ class RecipeDao {
 
 class IngredientDao {
   final Box<HiveIngredient> box;
+  final StreamController<List<Ingredient>> controller = StreamController();
 
   IngredientDao(this.box);
 
@@ -158,11 +164,16 @@ class IngredientDao {
   Future<List<Ingredient>> findAllIngredients() =>
       Future.value(IngredientDao.mapAllHiveIngredientsToIngredients(box));
 
-  Stream<List<Ingredient>> watchAllIngredients() => box.watch().map(
-        (event) {
-          return IngredientDao.mapAllHiveIngredientsToIngredients(box);
-        },
-      );
+  Stream<List<Ingredient>> watchAllIngredients() {
+    controller.add(IngredientDao.mapAllHiveIngredientsToIngredients(box));
+    box.watch().listen(
+      (event) {
+        controller.add(IngredientDao.mapAllHiveIngredientsToIngredients(box));
+      },
+    );
+
+    return controller.stream;
+  }
 
   Future<List<Ingredient>> findRecipeIngredients(int recipeId) {
     return Future.value(box.values
