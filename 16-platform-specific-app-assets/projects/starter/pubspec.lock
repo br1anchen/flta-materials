@@ -829,9 +829,9 @@ packages:
   webcrypto:
     dependency: "direct main"
     description:
-      name: webcrypto
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "patchs/webcrypto.dart"
+      relative: true
+    source: path
     version: "0.5.2"
   win32:
     dependency: transitive
