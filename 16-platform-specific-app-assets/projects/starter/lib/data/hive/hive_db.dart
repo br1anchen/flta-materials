@@ -9,22 +9,23 @@ import './hive_recipe.dart';
 import './hive_ingredient.dart';
 import './hive_key_pair.dart';
 
-Recipe hiveRecipeToRecipe(int id, HiveRecipe hiveRecipe) {
+Recipe hiveRecipeToRecipe(HiveRecipe recipe) {
   return Recipe(
-      id: id,
-      label: hiveRecipe.label,
-      image: hiveRecipe.image,
-      url: hiveRecipe.url,
-      calories: hiveRecipe.calories,
-      totalWeight: hiveRecipe.totalWeight,
-      totalTime: hiveRecipe.totalTime);
+      id: recipe.id,
+      label: recipe.label,
+      image: recipe.image,
+      url: recipe.url,
+      calories: recipe.calories,
+      totalWeight: recipe.totalWeight,
+      totalTime: recipe.totalTime);
 }
 
 HiveRecipe recipeToInsertableHiveRecipe(Recipe recipe) {
   return HiveRecipe(
+      id: recipe.id,
       label: recipe.label,
-      url: recipe.url,
       image: recipe.image,
+      url: recipe.url,
       calories: recipe.calories,
       totalWeight: recipe.totalWeight,
       totalTime: recipe.totalTime);
@@ -32,6 +33,7 @@ HiveRecipe recipeToInsertableHiveRecipe(Recipe recipe) {
 
 Ingredient hiveIngredientToIngredient(HiveIngredient ingredient) {
   return Ingredient(
+      id: ingredient.id,
       recipeId: ingredient.recipeId,
       name: ingredient.name,
       weight: ingredient.weight);
@@ -39,6 +41,7 @@ Ingredient hiveIngredientToIngredient(HiveIngredient ingredient) {
 
 HiveIngredient ingredientToInsertableHiveIngredient(Ingredient ingredient) {
   return HiveIngredient(
+      id: ingredient.id,
       recipeId: ingredient.recipeId,
       name: ingredient.name,
       weight: ingredient.weight);
@@ -106,16 +109,7 @@ class RecipeDao {
   RecipeDao(this.box);
 
   static List<Recipe> mapAllHiveRecipesToRecipes(Box<HiveRecipe> box) {
-    final recipes = <Recipe>[];
-    box.keys.toList().forEach((k) {
-      final hiveRecipe = box.get(k)!;
-      final recipe = hiveRecipeToRecipe(k, hiveRecipe);
-      if (!recipes.contains(recipe)) {
-        recipes.add(recipe);
-      }
-    });
-
-    return recipes;
+    return box.values.map(hiveRecipeToRecipe).toList();
   }
 
   Future<List<Recipe>> findAllRecipes() =>
@@ -134,10 +128,15 @@ class RecipeDao {
 
   Future<List<Recipe>> findRecipeById(int id) {
     final recipe = box.get(id);
-    return Future.value(recipe != null ? [hiveRecipeToRecipe(id, recipe)] : []);
+    return Future.value(recipe != null ? [hiveRecipeToRecipe(recipe)] : []);
   }
 
-  Future<int> insertRecipe(HiveRecipe recipe) => box.add(recipe);
+  Future<int> insertRecipe(HiveRecipe recipe) async {
+    final id = await box.add(recipe);
+    recipe.id = id;
+    box.put(id, recipe);
+    return id;
+  }
 
   Future deleteRecipe(int id) => box.delete(id);
 }
@@ -150,15 +149,7 @@ class IngredientDao {
 
   static List<Ingredient> mapAllHiveIngredientsToIngredients(
       Box<HiveIngredient> box) {
-    final ingredients = <Ingredient>[];
-    box.keys.toList().forEach((k) {
-      final hiveIngredient = box.get(k)!;
-      final ingredient = hiveIngredientToIngredient(hiveIngredient);
-      if (!ingredients.contains(ingredient)) {
-        ingredients.add(ingredient);
-      }
-    });
-    return ingredients;
+    return box.values.map(hiveIngredientToIngredient).toList();
   }
 
   Future<List<Ingredient>> findAllIngredients() =>
@@ -182,8 +173,12 @@ class IngredientDao {
         .toList());
   }
 
-  Future<int> insertIngredient(HiveIngredient ingredient) =>
-      box.add(ingredient);
+  Future<int> insertIngredient(HiveIngredient ingredient) async {
+    final id = await box.add(ingredient);
+    ingredient.id = id;
+    box.put(id, ingredient);
+    return id;
+  }
 
   Future deleteIngredient(int id) => box.delete(id);
 }

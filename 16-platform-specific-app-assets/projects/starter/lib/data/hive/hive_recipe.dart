@@ -5,24 +5,28 @@ part 'hive_recipe.g.dart';
 @HiveType(typeId: 0)
 class HiveRecipe extends HiveObject {
   @HiveField(0)
-  String? label;
+  int? id;
 
   @HiveField(1)
-  String? image;
+  String? label;
 
   @HiveField(2)
-  String? url;
+  String? image;
 
   @HiveField(3)
-  double? calories;
+  String? url;
 
   @HiveField(4)
-  double? totalWeight;
+  double? calories;
 
   @HiveField(5)
+  double? totalWeight;
+
+  @HiveField(6)
   double? totalTime;
 
   HiveRecipe({
+    this.id,
     this.label,
     this.image,
     this.url,

@@ -5,13 +5,16 @@ part 'hive_ingredient.g.dart';
 @HiveType(typeId: 1)
 class HiveIngredient extends HiveObject {
   @HiveField(0)
-  int? recipeId;
+  int? id;
 
   @HiveField(1)
-  String? name;
+  int? recipeId;
 
   @HiveField(2)
+  String? name;
+
+  @HiveField(3)
   double? weight;
 
-  HiveIngredient({this.recipeId, this.name, this.weight});
+  HiveIngredient({this.id, this.recipeId, this.name, this.weight});
 }
