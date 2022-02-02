@@ -11,7 +11,6 @@ import 'ui/main_screen.dart';
 Future<void> main() async {
   _setupLogging();
   WidgetsFlutterBinding.ensureInitialized();
-  // final repository = SqliteRepository();
   final repository = HiveRepository();
   await repository.init();
   runApp(MyApp(repository: repository));

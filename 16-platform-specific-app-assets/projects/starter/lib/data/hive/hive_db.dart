@@ -66,9 +66,20 @@ class RecipeDatabase {
 
     _encryptionKey =
         base64Url.decode(await secureStorage.read(key: 'key') as String);
+    print('_encryptionKey data: $_encryptionKey');
 
-    final rsaKeysbox = await openRSAKeysBox();
-    rsaKeysbox.put('rsa', await HiveKeyPair.generateKeys());
+    final rsaKeysBox = await openRSAKeysBox();
+    rsaKeysBox.put('rsa', await HiveKeyPair.generateKeyPair());
+
+    final keyPair = rsaKeysBox.get('rsa')!;
+    final publicKey = await keyPair.getPublicKey();
+    final privateKey = await keyPair.getPrivateKey();
+
+    final encryptedData = await publicKey
+        .encryptBytes(base64.decode('cXVpcwptaSBldCBvcmNpIGltcGVyZGk='));
+    final decryptedData = await privateKey.decryptBytes(encryptedData);
+    final text = base64.encode(decryptedData);
+    print('Decrypted data: $text');
   }
 
   Future<Box<HiveRecipe>> openReipesBox() {
