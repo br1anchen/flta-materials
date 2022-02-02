@@ -22,10 +22,12 @@ Recipe hiveRecipeToRecipe(int id, HiveRecipe hiveRecipe) {
 
 HiveRecipe recipeToInsertableHiveRecipe(Recipe recipe) {
   return HiveRecipe(
+      label: recipe.label,
       url: recipe.url,
       image: recipe.image,
       calories: recipe.calories,
-      totalWeight: recipe.totalWeight);
+      totalWeight: recipe.totalWeight,
+      totalTime: recipe.totalTime);
 }
 
 Ingredient hiveIngredientToIngredient(HiveIngredient ingredient) {
@@ -154,8 +156,8 @@ class IngredientDao {
   Future<List<Ingredient>> findRecipeIngredients(int recipeId) {
     return Future.value(box.values
         .where((i) => i.recipeId == recipeId)
-        .toList()
-        .cast<Ingredient>());
+        .map(hiveIngredientToIngredient)
+        .toList());
   }
 
   Future<int> insertIngredient(HiveIngredient ingredient) =>
