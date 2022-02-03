@@ -164,9 +164,7 @@ class DriftRepository extends Repository {
 
   @override
   Future<void> deleteRecipeIngredients(int recipeId) async {
-    // 1
     final ingredients = await findRecipeIngredients(recipeId);
-    // 2
     return deleteIngredients(ingredients);
   }
 

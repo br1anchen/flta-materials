@@ -3,6 +3,7 @@ import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 import 'data/hive/hive_repository.dart';
+import 'data/drift/drift_repository.dart';
 import 'data/repository.dart';
 import 'network/recipe_service.dart';
 import 'network/service_interface.dart';
@@ -11,6 +12,7 @@ import 'ui/main_screen.dart';
 Future<void> main() async {
   _setupLogging();
   WidgetsFlutterBinding.ensureInitialized();
+  /* final repository = DriftRepository(); */
   final repository = HiveRepository();
   await repository.init();
   runApp(MyApp(repository: repository));
