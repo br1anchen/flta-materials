@@ -11,7 +11,7 @@ import './hive_key_pair.dart';
 
 Recipe hiveRecipeToRecipe(HiveRecipe recipe) {
   return Recipe(
-      id: recipe.id,
+      id: recipe.key.toInt(),
       label: recipe.label,
       image: recipe.image,
       url: recipe.url,
@@ -22,7 +22,6 @@ Recipe hiveRecipeToRecipe(HiveRecipe recipe) {
 
 HiveRecipe recipeToInsertableHiveRecipe(Recipe recipe) {
   return HiveRecipe(
-      id: recipe.id,
       label: recipe.label,
       image: recipe.image,
       url: recipe.url,
@@ -33,7 +32,7 @@ HiveRecipe recipeToInsertableHiveRecipe(Recipe recipe) {
 
 Ingredient hiveIngredientToIngredient(HiveIngredient ingredient) {
   return Ingredient(
-      id: ingredient.id,
+      id: ingredient.key.toInt(),
       recipeId: ingredient.recipeId,
       name: ingredient.name,
       weight: ingredient.weight);
@@ -41,7 +40,6 @@ Ingredient hiveIngredientToIngredient(HiveIngredient ingredient) {
 
 HiveIngredient ingredientToInsertableHiveIngredient(Ingredient ingredient) {
   return HiveIngredient(
-      id: ingredient.id,
       recipeId: ingredient.recipeId,
       name: ingredient.name,
       weight: ingredient.weight);
@@ -131,12 +129,7 @@ class RecipeDao {
     return Future.value(recipe != null ? [hiveRecipeToRecipe(recipe)] : []);
   }
 
-  Future<int> insertRecipe(HiveRecipe recipe) async {
-    final id = await box.add(recipe);
-    recipe.id = id;
-    box.put(id, recipe);
-    return id;
-  }
+  Future<int> insertRecipe(HiveRecipe recipe) => box.add(recipe);
 
   Future deleteRecipe(int id) => box.delete(id);
 }
@@ -173,12 +166,8 @@ class IngredientDao {
         .toList());
   }
 
-  Future<int> insertIngredient(HiveIngredient ingredient) async {
-    final id = await box.add(ingredient);
-    ingredient.id = id;
-    box.put(id, ingredient);
-    return id;
-  }
+  Future<int> insertIngredient(HiveIngredient ingredient) =>
+      box.add(ingredient);
 
   Future deleteIngredient(int id) => box.delete(id);
 }
