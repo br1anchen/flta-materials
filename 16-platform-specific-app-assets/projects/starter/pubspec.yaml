@@ -29,8 +29,11 @@ dependencies:
   hive: ^2.0.5
   hive_flutter: ^1.1.0
   flutter_secure_storage: ^5.0.2
+  # https://github.com/google/webcrypto.dart/pull/25
   webcrypto:
-    path: ./patchs/webcrypto.dart
+    git:
+      url: git@github.com:jonasfj/webcrypto.dart.git
+      ref: fix-finalizer
 
 dev_dependencies:
   flutter_test:

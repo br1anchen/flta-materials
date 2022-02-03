@@ -829,9 +829,11 @@ packages:
   webcrypto:
     dependency: "direct main"
     description:
-      path: "patchs/webcrypto.dart"
-      relative: true
-    source: path
+      path: "."
+      ref: fix-finalizer
+      resolved-ref: "2b8aa9a22809956b272d08e27270a4a7b59ea3c6"
+      url: "git@github.com:jonasfj/webcrypto.dart.git"
+    source: git
     version: "0.5.2"
   win32:
     dependency: transitive
